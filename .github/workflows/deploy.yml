@@ -1,0 +1,34 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # or the branch you want to trigger the workflow on
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Trigger Jenkins Job
+      uses: appleboy/jenkins-action@v0.1.0
+      with:
+        jenkins_url: ${{ secrets.JENKINS_URL }}
+        user: ${{ secrets.JENKINS_USER }}
+        token: ${{ secrets.JENKINS_API_TOKEN }}
+        job: 'your-jenkins-job-name'
+        parameters: # optional, if your Jenkins job requires parameters
+          - name: param1
+            value: value1
+
+    - name: Wait for Jenkins Job to Complete
+      uses: appleboy/jenkins-action@v0.1.0
+      with:
+        jenkins_url: ${{ secrets.JENKINS_URL }}
+        user: ${{ secrets.JENKINS_USER }}
+        token: ${{ secrets.JENKINS_API_TOKEN }}
+        job: 'your-jenkins-job-name'
+        wait: true
