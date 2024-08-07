@@ -21,7 +21,6 @@ jobs:
         token: ${{ secrets.JENKINS_API_TOKEN }}
         job: 'your-jenkins-job-name'
       
-
     - name: Wait for Jenkins Job to Complete
       uses: appleboy/jenkins-action@v0.1.0
       with:
